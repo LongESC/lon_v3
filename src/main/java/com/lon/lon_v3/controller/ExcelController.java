@@ -64,7 +64,10 @@ public class ExcelController {
     public void export(HttpServletResponse response) throws IOException {
 
         QueryWrapper queryWrapper =new QueryWrapper<>();
+
         queryWrapper.likeRight("uno","7101");
+
+        queryWrapper.likeRight("uno","71012");
         List<User> list = userMapper.selectList(queryWrapper);
 
         //        向Excel中写入数据 也可以通过 head(Class<?>) 指定数据模板
