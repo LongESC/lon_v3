@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lon.lon_v3.mapper.UserMapper">
+    <!--id ="接口中的方法名"parameterType="传入的参数类型"resultType = "返回实体类对象，使用包.类名"-->
+
+    <resultMap id="UserMap" type="com.lon.lon_v3.entity.User">
+        <result column="id" property="id"/>
+        <result column="uno" property="uno"/>
+        <result column="gender" property="gender"/>
+        <result column="name" property="name"/>
+        <result column="dept" property="dept"/>
+    </resultMap>
+    <update id="dynamicsInsert" parameterType="java.lang.String"/>
+    <update id="dynamicsUpdate" parameterType="java.lang.String"></update>
+    <delete id="dynamicsDelete" parameterType="java.lang.String"></delete>
+
+
+    <select id="findUserByName" resultMap="UserMap">
+        <bind name="name" value="'%'+name+'%'"/>
+       select id,uno,role,name,gender,dept,home,clsName,tchName from md_user where name like #{name}
+    </select>
+
+    <resultMap id="UserRankMap" type="com.lon.lon_v3.entity.User">
+        <result column="id" property="id"/>
+        <result column="uno" property="uno"/>
+        <result column="role" property="role"/>
+        <result column="gender" property="gender"/>
+        <result column="name" property="name"/>
+        <result column="dept" property="dept"/>
+        <result column="home" property="home"/>
+        <association property="rank" javaType="com.lon.lon_v3.entity.Rank">
+            <id property="id" column="rid"/>
+            <result property="role" column="rrole"/>
+            <result property="sc" column="sc"/>
+            <result property="ct" column="ct"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserRankByName" resultMap="UserRankMap">
+        select u.id id,
+               u.uno uno,
+               u.role role,
+               u.name name,
+               u.gender gender,
+               u.dept dept,
+               u.home home,
+               r.id rid,
+               r.role rrole,
+               r.sc sc,
+               r.ct ct
+               from md_user u,sys_rank r where u.uno = #{uno} and u.role = r.role and u.dept = r.dept
+    </select>
+    <select id="findUserByUno" resultType="com.lon.lon_v3.entity.User">
+        <bind name="uno" value="'%'+uno+'%'"/>
+        select id,uno,role,name,gender,dept,home,clsName,tchName from md_user where uno like #{uno}
+    </select>
+
+
+</mapper>

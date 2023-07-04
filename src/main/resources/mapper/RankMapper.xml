@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lon.lon_v3.mapper.RankMapper">
+    <!--id ="接口中的方法名"parameterType="传入的参数类型"resultType = "返回实体类对象，使用包.类名"-->
+
+    <resultMap id="UsersRankMap" type="com.lon.lon_v3.entity.Rank">
+        <result column="id" property="id"/>
+        <result column="dept" property="dept"/>
+        <result column="role" property="role"/>
+        <result property="sc" column="sc"/>
+        <result property="ct" column="ct"/>
+        <collection property="userList" ofType="com.lon.lon_v3.entity.User">
+            <result column="uno" property="uno"/>
+            <result column="gender" property="gender"/>
+            <result column="name" property="name"/>
+            <result column="role" property="role"/>
+            <result column="udept" property="dept"/>
+        </collection>
+    </resultMap>
+
+
+
+    <select id="findUsersRank" resultMap="UsersRankMap">
+        select u.uno uno,
+               u.name name,
+               u.gender gender,
+               u.dept udept,
+               r.id id,
+               r.role role,
+               r.dept dept,
+               r.sc sc,
+               r.ct ct
+        from md_user u,sys_rank r where  u.role=r.role and r.id =#{id}
+    </select>
+
+
+
+</mapper>
