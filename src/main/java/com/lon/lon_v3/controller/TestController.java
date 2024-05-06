@@ -61,11 +61,6 @@ public class TestController {
     private static String filePath= "E:\\file\\excel\\";
 
 
-    @GetMapping (value = "/hai")
-    public String HelloWorld(){
-        return "Hello World";
-    }
-
     @RequestMapping("/date")
     protected LocalTime date(){
         return LocalTime.now();
